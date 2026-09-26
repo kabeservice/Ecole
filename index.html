@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plateforme Scolaire</title>
+<title>Hôtellerie</title>
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
@@ -39,6 +39,7 @@
   a{color:inherit;}
 
   /* ---------- LAYOUT ---------- */
+  html, body{overflow-x:hidden;width:100%;}
   .app{display:flex;min-height:100vh;}
   .sidebar{
     width:236px;flex-shrink:0;background:var(--ink);color:#E9E7DF;
@@ -57,20 +58,26 @@
   .nav-item.active{background:#232F41;color:#fff;border-left:3px solid var(--accent);font-weight:600;}
   .nav-ico{width:18px;text-align:center;font-size:14px;opacity:.9;}
 
-  .main{flex:1;min-width:0;}
+  .main{flex:1;min-width:0;max-width:100%;}
   .topbar{
-    display:flex;align-items:center;justify-content:space-between;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
     padding:16px 28px;background:var(--panel);border-bottom:1px solid var(--line);
     position:sticky;top:0;z-index:5;
   }
   .topbar h1{font-size:18px;margin:0;font-weight:700;}
   .topbar .meta{font-size:12.5px;color:#71798A;margin-top:2px;}
-  .topbar-right{display:flex;align-items:center;gap:14px;font-size:13px;color:#4B5567;}
+  .topbar-right{display:flex;align-items:center;gap:12px;font-size:13px;color:#4B5567;flex-shrink:0;}
   .avatar{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent);
-    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12.5px;overflow:hidden;}
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12.5px;overflow:hidden;flex-shrink:0;}
   .avatar img{width:100%;height:100%;object-fit:cover;}
+  .menu-toggle{
+    display:none;background:none;border:1px solid var(--line);border-radius:6px;width:34px;height:34px;
+    align-items:center;justify-content:center;cursor:pointer;margin-right:12px;font-size:15px;flex-shrink:0;
+  }
+  .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:55;}
+  .sidebar-backdrop.open{display:block;}
 
-  .content{padding:26px 28px 60px;max-width:1180px;}
+  .content{padding:26px 28px 60px;max-width:1180px;width:100%;}
   .page{display:none;}
   .page.active{display:block;}
 
@@ -81,7 +88,7 @@
   .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
   .stat-card{
     background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--ink);
-    border-radius:4px;padding:16px 18px;
+    border-radius:4px;padding:16px 18px;min-width:0;
   }
   .stat-card.c-accent{border-left-color:var(--accent);}
   .stat-card.c-success{border-left-color:var(--success);}
@@ -91,9 +98,8 @@
   .stat-label{font-size:12.5px;color:#71798A;margin-top:6px;}
 
   .grid-2{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;margin-bottom:24px;}
-  @media (max-width:900px){.grid-2{grid-template-columns:1fr;} .stat-grid{grid-template-columns:repeat(2,1fr);}}
 
-  .panel{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:18px 20px;}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:18px 20px;overflow-x:auto;}
   .panel h3{font-size:13.5px;margin:0 0 14px;font-weight:700;}
 
   .onb-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer;}
@@ -166,10 +172,10 @@
 
   /* ---------- LOGIN ---------- */
   .login-screen{
-    position:fixed;inset:0;background:var(--ink);display:flex;align-items:center;justify-content:center;z-index:100;
+    position:fixed;inset:0;background:var(--ink);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px;
   }
   .login-card{
-    background:var(--panel);width:360px;border-radius:6px;padding:32px 30px;border:1px solid var(--line-dark);
+    background:var(--panel);width:360px;max-width:100%;border-radius:6px;padding:32px 30px;border:1px solid var(--line-dark);
   }
   .login-brand{font-size:16px;font-weight:700;margin-bottom:2px;}
   .login-sub{font-size:12.5px;color:#71798A;margin-bottom:22px;}
@@ -177,20 +183,12 @@
   .login-card input{width:100%;padding:9px 11px;}
   .login-error{color:var(--danger);font-size:12px;margin-top:10px;display:none;}
   .login-submit{width:100%;margin-top:20px;padding:10px;}
-  .demo-accounts{margin-top:22px;border-top:1px solid var(--line);padding-top:16px;}
-  .demo-accounts div{font-size:11.5px;color:#71798A;margin-bottom:8px;}
-  .demo-btn{
-    width:100%;text-align:left;background:#FBFAF7;border:1px solid var(--line);border-radius:5px;
-    padding:8px 10px;font-size:12px;cursor:pointer;margin-bottom:6px;color:var(--ink);
-  }
-  .demo-btn:hover{border-color:var(--ink);}
-  .demo-btn b{display:block;font-size:12.5px;}
-  .demo-btn span{color:#71798A;font-size:11px;}
 
   /* ---------- ROLE / TOGGLE / MODAL ---------- */
   .role-badge{padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;}
   .role-badge.direction{background:#E7E2F3;color:#5B3FA0;}
   .role-badge.enseignant{background:var(--success-soft);color:var(--success);}
+  .role-badge.surveillant{background:var(--warn-soft);color:#7A5A17;}
   .role-badge.developpeur{background:var(--danger-soft);color:var(--danger);}
 
   .switch{position:relative;display:inline-block;width:36px;height:20px;flex-shrink:0;}
@@ -205,7 +203,7 @@
 
   .modal-overlay{position:fixed;inset:0;background:rgba(27,36,48,.5);display:none;align-items:center;justify-content:center;z-index:50;padding:20px;}
   .modal-overlay.open{display:flex;}
-  .modal-card{background:var(--panel);width:380px;border-radius:6px;padding:24px;border:1px solid var(--line);max-height:88vh;overflow-y:auto;}
+  .modal-card{background:var(--panel);width:380px;max-width:100%;border-radius:6px;padding:24px;border:1px solid var(--line);max-height:88vh;overflow-y:auto;}
   .modal-card h3{margin:0 0 16px;font-size:14px;}
   .modal-card label{display:block;font-size:12px;font-weight:600;margin:12px 0 5px;}
   .modal-card input, .modal-card select, .modal-card textarea{width:100%;}
@@ -214,7 +212,7 @@
   .warn-note{background:var(--warn-soft);color:#7A5A17;border-radius:4px;padding:8px 10px;font-size:11.5px;margin-top:14px;}
 
   /* ---------- FICHE ELEVE ---------- */
-  .modal-card.wide{width:540px;}
+  .modal-card.wide{width:540px;max-width:100%;}
   .profile-head{display:flex;gap:16px;align-items:flex-start;}
   .profile-photo{
     width:64px;height:64px;border-radius:50%;background:var(--accent-soft);color:var(--accent);
@@ -238,14 +236,50 @@
   .absent-list-item:last-child{border-bottom:none;}
   .file-btn{cursor:pointer;}
   .file-btn input{display:none;}
+
+  /* ---------- SYNC STATUS INDICATOR ---------- */
+  @keyframes spin{0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);}}
+  #syncStatus{transition:color .3s;}
+  #syncIcon{display:inline-block;}
+  #syncStatus.syncing #syncIcon{animation:spin .8s linear infinite;}
+  #syncStatus.synced{color:#3F7A5E;}
+  #syncStatus.offline{color:#7A8496;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .menu-toggle{display:flex;}
+    .sidebar{
+      position:fixed;left:0;top:0;height:100vh;transform:translateX(-100%);
+      transition:transform .2s ease;z-index:60;box-shadow:2px 0 18px rgba(0,0,0,.3);
+    }
+    .sidebar.open{transform:translateX(0);}
+    .topbar{padding:12px 14px;}
+    .content{padding:16px 14px 50px;}
+    .grid-2{grid-template-columns:1fr;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    .topbar h1{font-size:16px;}
+  }
+  @media (max-width:600px){
+    .stat-grid{grid-template-columns:1fr;}
+    .topbar-right span{display:none;}
+    .toolbar{flex-direction:column;align-items:stretch;}
+    .toolbar > div{display:flex;flex-wrap:wrap;gap:8px;}
+    .kpi-strip{gap:14px;}
+    .profile-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:420px){
+    .topbar{flex-wrap:wrap;row-gap:8px;}
+    .topbar-right{width:100%;justify-content:flex-end;}
+  }
 </style>
 </head>
 <body>
 
 <!-- ============ ECRAN DE CONNEXION ============ -->
 <div class="login-screen" id="loginScreen">
-  <div class="login-card">
-    <div class="login-brand">Plateforme Scolaire</div>
+  <button id="installAppBtnLogin" onclick="installApp()" style="display:none;position:fixed;top:14px;right:14px;z-index:50;" class="btn sm accent">📲 Installer l'application</button>
+  <div class="login-card" id="loginCardNormal">
+    <div class="login-brand">Hôtellerie</div>
     <div class="login-sub">Connectez-vous avec votre identifiant</div>
 
     <label>Identifiant</label>
@@ -254,22 +288,31 @@
     <input type="text" id="loginPass" placeholder="••••••••">
     <div class="login-error" id="loginError">Identifiant ou mot de passe incorrect.</div>
     <button class="btn primary login-submit" onclick="attemptLogin()">Se connecter</button>
+  </div>
 
-    <div class="demo-accounts">
-      <div>Comptes de démonstration — cliquez pour pré-remplir :</div>
-      <button class="demo-btn" onclick="fillLogin('amina.direction','direction2026')"><b>Mme Amina — Direction</b><span>Accès complet à l'établissement</span></button>
-      <button class="demo-btn" onclick="fillLogin('farah.ismail','ens1234')"><b>M. Farah — Enseignant</b><span>Accès à ses classes uniquement</span></button>
-      <button class="demo-btn" onclick="fillLogin('dev.kabweynew','root0000')"><b>Kabweynew — Développeur</b><span>Accès système, tous les comptes</span></button>
-    </div>
+  <div class="login-card" id="loginCardSetup" style="display:none;">
+    <div class="login-brand">Bienvenue</div>
+    <div class="login-sub">Aucun compte n'existe encore. Créez le compte Développeur pour démarrer — il pourra ensuite créer les comptes du Proviseur, des enseignants, des surveillants, etc.</div>
+
+    <label>Nom complet</label>
+    <input type="text" id="setupNom" placeholder="ex : M. Idriss Warsama">
+    <label>Identifiant</label>
+    <input type="text" id="setupLogin" placeholder="ex : idriss.dev">
+    <label>Mot de passe</label>
+    <input type="text" id="setupPass" placeholder="Choisissez un mot de passe">
+    <div class="login-error" id="setupError">Merci de remplir tous les champs.</div>
+    <button class="btn primary login-submit" onclick="createFirstAccount()">Créer le compte et se connecter</button>
   </div>
 </div>
+
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
 
 <div class="app">
 
   <!-- ============ SIDEBAR ============ -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
-      <div class="brand-name">École — Direction</div>
+      <div class="brand-name">Hôtellerie</div>
       <div class="brand-sub">Année scolaire 2026 – 2027</div>
     </div>
     <nav class="nav" id="nav"></nav>
@@ -278,12 +321,20 @@
   <!-- ============ MAIN ============ -->
   <div class="main">
     <div class="topbar">
-      <div>
-        <h1 id="pageTitle">Tableau de bord</h1>
-        <div class="meta" id="pageMeta"></div>
+      <div style="display:flex;align-items:center;">
+        <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">☰</button>
+        <div>
+          <h1 id="pageTitle">Tableau de bord</h1>
+          <div class="meta" id="pageMeta"></div>
+        </div>
       </div>
       <div class="topbar-right">
+        <span id="syncStatus" style="font-size:12px;color:#7A8496;display:flex;align-items:center;gap:5px;">
+          <span id="syncIcon">⊙</span><span id="syncText">Hors ligne</span>
+        </span>
         <span id="topbarUserRole"></span>
+        <button class="btn sm" id="installAppBtn" onclick="installApp()" style="display:none;">📲 Installer</button>
+        <button class="btn sm accent" onclick="openShareModal()">Partager</button>
         <div class="avatar" id="topbarAvatar"></div>
         <button class="btn sm" onclick="logout()">Déconnexion</button>
       </div>
@@ -296,14 +347,16 @@
 <!-- ============ MODALS ============ -->
 <div class="modal-overlay" id="modalAddTeacher">
   <div class="modal-card">
-    <h3>Ajouter un enseignant (compte de connexion)</h3>
+    <h3>Nouveau compte utilisateur</h3>
     <label>Nom complet</label>
     <input type="text" id="newTeacherName" placeholder="ex : Mme Souad Hassan">
-    <label>Matière</label>
+    <label>Rôle</label>
+    <select id="newTeacherRole"><option value="enseignant">Enseignant</option><option value="surveillant">Surveillant</option><option value="direction">Proviseur</option><option value="developpeur">Développeur</option></select>
+    <label>Matière / poste</label>
     <input type="text" id="newTeacherSubject" placeholder="ex : Mathématiques">
     <label>Identifiant</label>
     <input type="text" id="newTeacherLogin" placeholder="généré automatiquement">
-    <div class="warn-note">Un mot de passe temporaire sera généré. L'enseignant devra le changer à sa première connexion.</div>
+    <div class="warn-note">Un mot de passe temporaire sera généré. La personne devra le changer à sa première connexion.</div>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('modalAddTeacher')">Annuler</button>
       <button class="btn accent" onclick="createTeacher()">Créer le compte</button>
@@ -335,6 +388,25 @@
 
 <div class="modal-overlay" id="modalStudentProfile">
   <div class="modal-card wide" id="studentProfileBody"></div>
+</div>
+
+<div class="modal-overlay" id="modalShare">
+  <div class="modal-card">
+    <h3>Partager l'application</h3>
+    <p class="subtle">Envoyez ce lien pour que d'autres personnes ouvrent l'application dans leur navigateur — elles pourront ensuite l'installer sur leur téléphone (option "Installer l'application" / "Ajouter à l'écran d'accueil").</p>
+    <label>Lien de l'application</label>
+    <input type="text" id="shareUrlInput" readonly onclick="this.select()">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+      <button class="btn" onclick="copyShareLink()">Copier le lien</button>
+      <a class="btn" id="shareWhatsapp" href="#" target="_blank" rel="noopener" style="text-decoration:none;">WhatsApp</a>
+      <a class="btn" id="shareEmail" href="#" style="text-decoration:none;">E-mail</a>
+      <button class="btn accent" id="shareNativeBtn" onclick="nativeShare()" style="display:none;">Autres apps…</button>
+    </div>
+    <div class="warn-note" id="shareFileWarning" style="display:none;">Ce lien pointe vers un fichier local (file://) — il ne fonctionnera que sur cet ordinateur. Déployez d'abord l'app en ligne (ex. GitHub Pages) pour obtenir un lien partageable et installable par les autres.</div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('modalShare')">Fermer</button>
+    </div>
+  </div>
 </div>
 
 <div class="modal-overlay" id="modalAddClasse">
@@ -469,34 +541,64 @@ function nextMatricule(){ return String(2600 + ELEVES.length + 1); }
 // NB (prototype) : les mots de passe apparaissent en clair pour la démo.
 // En production, ils doivent être hachés côté serveur / Firebase Auth —
 // même le compte développeur ne devrait forcer qu'une réinitialisation.
-let USERS = [
-  {id:'u1', login:'amina.direction', nom:'Mme Amina', role:'direction', pass:'direction2026', poste:'Directrice'},
-  {id:'u2', login:'farah.ismail', nom:'M. Farah Ismail', role:'enseignant', pass:'ens1234', poste:'Enseignant'},
-  {id:'u4', login:'dev.kabweynew', nom:'Kabweynew', role:'developpeur', pass:'root0000', poste:'Développeur plateforme'},
-];
-const ROLE_LABELS = {direction:'Direction', enseignant:'Enseignant', developpeur:'Développeur'};
+let USERS = [];
+const ROLE_LABELS = {direction:'Proviseur', enseignant:'Enseignant', surveillant:'Surveillant', developpeur:'Développeur'};
 let currentUser = null;
 
-function fillLogin(u,p){
-  document.getElementById('loginUser').value = u;
-  document.getElementById('loginPass').value = p;
+function loadUsersFromLocal(){
+  try{
+    const saved = localStorage.getItem('hotellerie-users');
+    if(saved) USERS = JSON.parse(saved);
+  }catch(e){}
 }
+function saveUsersToLocal(){
+  localStorage.setItem('hotellerie-users', JSON.stringify(USERS));
+}
+
+loadUsersFromLocal();
+
+function showLoginScreen(){
+  document.getElementById('loginScreen').style.display = 'flex';
+  if(USERS.length === 0){
+    document.getElementById('loginCardNormal').style.display = 'none';
+    document.getElementById('loginCardSetup').style.display = 'block';
+  } else {
+    document.getElementById('loginCardNormal').style.display = 'block';
+    document.getElementById('loginCardSetup').style.display = 'none';
+  }
+}
+
+function completeLogin(user){
+  currentUser = user;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('topbarUserRole').textContent = `${user.nom} — ${ROLE_LABELS[user.role]}`;
+  document.getElementById('topbarAvatar').textContent = user.nom.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  buildNav(user.role);
+  renderAll();
+  showPage('dashboard');
+}
+
+function createFirstAccount(){
+  const nom = document.getElementById('setupNom').value.trim();
+  const login = document.getElementById('setupLogin').value.trim();
+  const pass = document.getElementById('setupPass').value;
+  if(!nom || !login || !pass){ document.getElementById('setupError').style.display = 'block'; return; }
+  const user = {id: uid('u'), login, nom, role:'developpeur', pass, poste:'Développeur plateforme'};
+  USERS.push(user);
+  saveUsersToLocal();
+  completeLogin(user);
+}
+
 function attemptLogin(){
   const u = document.getElementById('loginUser').value.trim();
   const p = document.getElementById('loginPass').value;
   const found = USERS.find(x=>x.login===u && x.pass===p);
   if(!found){ document.getElementById('loginError').style.display = 'block'; return; }
-  currentUser = found;
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('topbarUserRole').textContent = `${found.nom} — ${ROLE_LABELS[found.role]}`;
-  document.getElementById('topbarAvatar').textContent = found.nom.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
-  buildNav(found.role);
-  renderAll();
-  showPage('dashboard');
+  completeLogin(found);
 }
 function logout(){
   currentUser = null;
-  document.getElementById('loginScreen').style.display = 'flex';
+  showLoginScreen();
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
   document.getElementById('loginError').style.display = 'none';
@@ -506,17 +608,17 @@ function logout(){
    NAVIGATION
    ============================================================ */
 const PAGES = [
-  {id:'dashboard', label:'Tableau de bord', ico:'▣', roles:['direction','enseignant','developpeur']},
-  {id:'eleves', label:'Élèves', ico:'◈', roles:['direction','enseignant','developpeur']},
+  {id:'dashboard', label:'Tableau de bord', ico:'▣', roles:['direction','enseignant','surveillant','developpeur']},
+  {id:'eleves', label:'Élèves', ico:'◈', roles:['direction','enseignant','surveillant','developpeur']},
   {id:'classes', label:'Classes', ico:'▤', roles:['direction','developpeur']},
   {id:'enseignants', label:'Enseignants', ico:'◇', roles:['direction','developpeur']},
-  {id:'presence', label:'Appel de présence', ico:'✓', roles:['direction','enseignant','developpeur']},
+  {id:'presence', label:'Appel de présence', ico:'✓', roles:['direction','enseignant','surveillant','developpeur']},
   {id:'notes', label:'Notes', ico:'✎', roles:['direction','enseignant','developpeur']},
   {id:'examens', label:'Examens', ico:'▦', roles:['direction','enseignant','developpeur']},
   {id:'cours', label:'Cours & Programme', ico:'▥', roles:['direction','enseignant','developpeur']},
   {id:'anglais', label:'Module Anglais', ico:'A', roles:['direction','enseignant','developpeur']},
   {id:'rapports', label:'Rapports', ico:'▧', roles:['direction','developpeur']},
-  {id:'calendrier', label:'Calendrier', ico:'▨', roles:['direction','enseignant','developpeur']},
+  {id:'calendrier', label:'Calendrier', ico:'▨', roles:['direction','enseignant','surveillant','developpeur']},
   {id:'utilisateurs', label:'Utilisateurs', ico:'◐', roles:['direction','developpeur']},
   {id:'parametres', label:'Paramètres', ico:'⚙', roles:['direction','developpeur']},
   {id:'comptes-dev', label:'Comptes système', ico:'⛭', roles:['developpeur']},
@@ -539,6 +641,15 @@ function showPage(id){
   const p = PAGES.find(x=>x.id===id);
   document.getElementById('pageTitle').textContent = p.label;
   document.getElementById('pageMeta').textContent = pageSubtitle(id);
+  if(window.innerWidth <= 900) closeSidebar();
+}
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarBackdrop').classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarBackdrop').classList.remove('open');
 }
 function pageSubtitle(id){
   const map = {
@@ -1035,7 +1146,7 @@ pageWrap('calendrier', `
 pageWrap('utilisateurs', `
   <div class="toolbar">
     <div class="toolbar-left"><span class="subtle" id="usersCount"></span></div>
-    <div><button class="btn accent" onclick="openModal('modalAddTeacher')">+ Ajouter un enseignant</button></div>
+    <div><button class="btn accent" onclick="openModal('modalAddTeacher')">+ Nouveau compte</button></div>
   </div>
   <div class="panel">
     <table>
@@ -1072,18 +1183,25 @@ pageWrap('parametres', `
   </div>
 
   <div class="panel" style="margin-top:18px;">
-    <h3>Connexion Firestore (base de données en ligne)</h3>
+    <h3>Synchronisation des données</h3>
     <p class="subtle" id="firebaseStatus">Non connecté — mode local (données en mémoire uniquement)</p>
-    <label>Config Firebase (collée depuis la console Firebase, au format JSON)</label>
-    <textarea id="firebaseConfigInput" rows="5" placeholder='{"apiKey":"...","authDomain":"...","projectId":"..."}'></textarea>
-    <button class="btn accent" style="margin-top:10px;" onclick="connectFirebase()">Connecter</button>
-    <div class="warn-note">Tant que Firestore n'est pas connecté, toutes les données sont conservées uniquement dans ce navigateur et sont perdues au rechargement de la page.</div>
+    <div id="firebaseSyncOk" style="display:none;">
+      <p class="subtle">Vos données (classes, élèves, notes, présences, examens, comptes) se sauvegardent automatiquement et se retrouvent sur tous vos appareils. Les photos et documents joints restent uniquement sur cet appareil.</p>
+      <button class="btn sm" style="margin-top:6px;" onclick="toggleAdvancedFirebase()">Options avancées</button>
+    </div>
+    <div id="firebaseAdvanced" style="display:none;margin-top:12px;">
+      <label>Config Firebase (collée depuis la console Firebase, au format JSON)</label>
+      <textarea id="firebaseConfigInput" rows="5" placeholder='{"apiKey":"...","authDomain":"...","projectId":"..."}'></textarea>
+      <button class="btn accent" style="margin-top:10px;" onclick="connectFirebase()">Connecter</button>
+      <div class="warn-note" id="firebaseNotConnectedWarning" style="display:none;">Tant que Firestore n'est pas connecté, toutes les données sont conservées uniquement dans ce navigateur et sont perdues au rechargement de la page.</div>
+    </div>
   </div>
 
   <div class="panel" style="margin-top:18px;">
     <h3>Permissions par rôle</h3>
+
     <table class="perm-table">
-      <thead><tr><th>Module</th><th>Direction</th><th>Enseignant</th></tr></thead>
+      <thead><tr><th>Module</th><th>Proviseur</th><th>Enseignant</th></tr></thead>
       <tbody>
         ${['Élèves','Notes','Présence','Examens','Rapports','Gestion des enseignants','Paramètres établissement'].map((mod,i)=>`
         <tr>
@@ -1093,7 +1211,7 @@ pageWrap('parametres', `
         </tr>`).join('')}
       </tbody>
     </table>
-    <p class="subtle" style="margin-top:10px;">La colonne Direction reste toujours activée. Décochez une case pour retirer l'accès des enseignants à ce module.</p>
+    <p class="subtle" style="margin-top:10px;">La colonne Proviseur reste toujours activée. Décochez une case pour retirer l'accès des enseignants à ce module.</p>
   </div>
 
   <div class="panel" style="margin-top:18px;">
@@ -1128,6 +1246,7 @@ function renderAll(){
   const ae = document.getElementById('angElevesCount'); if(ae) ae.textContent = ELEVES.length;
   const aen = document.getElementById('angEnsCount'); if(aen) aen.textContent = ENSEIGNANTS.filter(e=>/anglais/i.test(e.matiere||'')).length;
   const rb = document.getElementById('rapportsBulletins'); if(rb) rb.textContent = `0/${ELEVES.length} finalisés`;
+  scheduleSave();
 }
 
 /* ============================================================
@@ -1169,15 +1288,20 @@ function renderUsersPage(){
 }
 function createTeacher(){
   const name = document.getElementById('newTeacherName').value.trim();
-  if(!name){ alert('Veuillez indiquer le nom de l\'enseignant.'); return; }
+  if(!name){ alert('Veuillez indiquer le nom.'); return; }
+  const role = document.getElementById('newTeacherRole').value;
   const manualLogin = document.getElementById('newTeacherLogin').value.trim();
-  const login = manualLogin || name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z ]/g,'').trim().split(' ').reverse().join('.') || ('enseignant' + (USERS.length+1));
+  const login = manualLogin || name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z ]/g,'').trim().split(' ').reverse().join('.') || ('utilisateur' + (USERS.length+1));
   const tempPass = genPassword();
-  USERS.push({id: uid('u'), login, nom:name, role:'enseignant', pass:tempPass, poste: document.getElementById('newTeacherSubject').value.trim() || 'Enseignant'});
+  const defaultPoste = role==='direction' ? 'Proviseur' : role==='developpeur' ? 'Développeur plateforme' : role==='surveillant' ? 'Surveillant' : 'Enseignant';
+  USERS.push({id: uid('u'), login, nom:name, role, pass:tempPass, poste: document.getElementById('newTeacherSubject').value.trim() || defaultPoste});
+  saveUsersToLocal();
   ['newTeacherName','newTeacherSubject','newTeacherLogin'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('newTeacherRole').value = 'enseignant';
   closeModal('modalAddTeacher');
   renderUsersPage();
-  alert(`Compte créé.\nIdentifiant : ${login}\nMot de passe temporaire : ${tempPass}\n\nCommuniquez ces informations à l'enseignant — il devra le changer à la première connexion.`);
+  scheduleSave();
+  alert(`Compte créé.\nIdentifiant : ${login}\nMot de passe temporaire : ${tempPass}\n\nCommuniquez ces informations à la personne — elle devra le changer à la première connexion.`);
 }
 let resetTargetId = null;
 function openResetModal(userId){
@@ -1191,8 +1315,10 @@ function doResetPassword(){
   const u = USERS.find(x=>x.id===resetTargetId);
   const newPass = genPassword();
   u.pass = newPass;
+  saveUsersToLocal();
   document.getElementById('resetPwResult').innerHTML = `<div class="pw-reveal">Nouveau mot de passe : ${newPass}</div>`;
   renderUsersPage();
+  scheduleSave();
 }
 
 /* ============================================================
@@ -1290,6 +1416,18 @@ function handlePhotoUpload(eleveId, files){
 /* ============================================================
    FIRESTORE (facultatif)
    ============================================================ */
+// Config Firebase du projet (collée depuis la console Firebase).
+// Utilisée automatiquement au premier chargement si aucune config n'a
+// encore été enregistrée localement (voir bloc d'auto-connexion plus bas).
+const DEFAULT_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDo54rshWzdSfaOyf6Eq2UIj7swQ5ATcT4",
+  authDomain: "scolaire-c747d.firebaseapp.com",
+  projectId: "scolaire-c747d",
+  storageBucket: "scolaire-c747d.firebasestorage.app",
+  messagingSenderId: "646415728662",
+  appId: "1:646415728662:web:1489ca4e5ab0270b9b7537"
+};
+
 let db = null;
 let firebaseReady = false;
 function tryInitFirebase(configStr){
@@ -1312,7 +1450,11 @@ function tryInitFirebase(configStr){
 function connectFirebase(){
   const val = document.getElementById('firebaseConfigInput').value.trim();
   if(!val){ alert('Collez la config Firebase (JSON) d\'abord.'); return; }
-  if(tryInitFirebase(val)){ updateFirebaseStatus(); alert('Connecté à Firestore.\n\n(La synchronisation des données élèves/classes/etc. avec Firestore reste à activer — pour l\'instant seule la connexion est établie.)'); }
+  if(tryInitFirebase(val)){
+    updateFirebaseStatus();
+    loadStateFromFirestore().then(()=>{ renderAll(); });
+    alert('Connecté à Firestore. Les données vont maintenant se synchroniser automatiquement.');
+  }
 }
 function updateFirebaseStatus(){
   const el = document.getElementById('firebaseStatus');
@@ -1320,10 +1462,121 @@ function updateFirebaseStatus(){
   el.textContent = firebaseReady
     ? 'Connecté ✓' + (typeof firebase!=='undefined' && firebase.apps.length ? ' (projet : ' + (firebase.app().options.projectId||'—') + ')' : '')
     : 'Non connecté — mode local (données en mémoire uniquement)';
+  const ok = document.getElementById('firebaseSyncOk');
+  const adv = document.getElementById('firebaseAdvanced');
+  const warn = document.getElementById('firebaseNotConnectedWarning');
+  if(ok) ok.style.display = firebaseReady ? 'block' : 'none';
+  if(adv) adv.style.display = firebaseReady ? 'none' : 'block';
+  if(warn) warn.style.display = firebaseReady ? 'none' : 'block';
+  updateSyncStatus();
+}
+function toggleAdvancedFirebase(){
+  const adv = document.getElementById('firebaseAdvanced');
+  if(adv) adv.style.display = adv.style.display === 'none' ? 'block' : 'none';
+}
+
+/* ---- Synchronisation des données avec Firestore ----
+   Tout est stocké dans un seul document (app/state) pour rester simple.
+   Les photos et documents joints des élèves restent LOCAUX uniquement
+   (non synchronisés) car ils peuvent dépasser la limite de taille d'un
+   document Firestore (1 Mo) — à faire évoluer vers Firebase Storage
+   si besoin de les partager entre appareils. */
+function stateForSync(){
+  return {
+    CLASSES,
+    ELEVES: ELEVES.map(e=>{ const {photo, documents, ...rest} = e; return rest; }),
+    DOSSIERS,
+    ENSEIGNANTS,
+    NOTES,
+    EXAMENS,
+    USERS,
+    updatedAt: new Date().toISOString()
+  };
+}
+async function loadStateFromFirestore(){
+  if(!firebaseReady || !db) return;
+  try{
+    const snap = await db.collection('app').doc('state').get();
+    if(snap.exists){
+      const data = snap.data();
+      if(data.CLASSES) CLASSES = data.CLASSES;
+      if(data.ELEVES) ELEVES = data.ELEVES.map(e=>({photo:null, documents:[], ...e}));
+      if(data.DOSSIERS) DOSSIERS = data.DOSSIERS;
+      if(data.ENSEIGNANTS) ENSEIGNANTS = data.ENSEIGNANTS;
+      if(data.NOTES) NOTES = data.NOTES;
+      if(data.EXAMENS) EXAMENS = data.EXAMENS;
+      if(data.USERS){
+        const existingIds = new Set(USERS.map(u=>u.id));
+        const newUsers = data.USERS.filter(u=>!existingIds.has(u.id));
+        USERS.push(...newUsers);
+      }
+    }
+  }catch(err){
+    console.error('Chargement Firestore impossible :', err);
+  }
+}
+let saveTimer = null;
+let lastSyncTime = null;
+
+function updateSyncStatus(){
+  const el = document.getElementById('syncStatus');
+  const icon = document.getElementById('syncIcon');
+  const text = document.getElementById('syncText');
+  if(!el) return;
+  
+  if(!firebaseReady || !db){
+    el.className = 'offline';
+    icon.textContent = '⊙';
+    text.textContent = 'Hors ligne';
+  } else {
+    el.className = 'synced';
+    icon.textContent = '✓';
+    if(lastSyncTime){
+      const now = new Date();
+      const diff = Math.round((now - lastSyncTime) / 1000);
+      text.textContent = diff < 60 ? 'À l\'instant' : diff < 3600 ? `Il y a ${diff}s` : 'Synchronisé';
+    } else {
+      text.textContent = 'Connecté';
+    }
+  }
+}
+
+function showSyncing(){
+  const el = document.getElementById('syncStatus');
+  const icon = document.getElementById('syncIcon');
+  const text = document.getElementById('syncText');
+  if(!el) return;
+  el.className = 'syncing';
+  icon.textContent = '⟳';
+  text.textContent = 'Synchronisation...';
+}
+
+function scheduleSave(){
+  if(!firebaseReady || !db) return;
+  clearTimeout(saveTimer);
+  showSyncing();
+  saveTimer = setTimeout(saveStateToFirestore, 800);
+}
+
+async function saveStateToFirestore(){
+  if(!firebaseReady || !db) return;
+  try{
+    await db.collection('app').doc('state').set(stateForSync());
+    lastSyncTime = new Date();
+    updateSyncStatus();
+  }catch(err){
+    console.error('Sauvegarde Firestore impossible :', err);
+    updateSyncStatus();
+  }
 }
 (function(){
   const saved = localStorage.getItem('firebaseConfig');
-  if(saved) tryInitFirebase(saved);
+  const ok = saved ? tryInitFirebase(saved) : tryInitFirebase(JSON.stringify(DEFAULT_FIREBASE_CONFIG));
+  if(ok){
+    loadStateFromFirestore().finally(()=>{ updateFirebaseStatus(); updateSyncStatus(); showLoginScreen(); });
+  } else {
+    showLoginScreen();
+  }
 })();
 
 /* ============================================================
@@ -1334,6 +1587,89 @@ if('serviceWorker' in navigator){
     navigator.serviceWorker.register('sw.js').catch(()=>{});
   });
 }
+
+// Bouton d'installation explicite : Chrome/Edge/Android ne montrent plus
+// systématiquement leur propre bannière, donc on capture l'évènement du
+// navigateur et on affiche nos propres boutons "Installer" dès qu'il est
+// disponible (topbar + écran de connexion).
+let deferredInstallPrompt = null;
+function isStandalone(){
+  try{
+    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  }catch(e){
+    return false;
+  }
+}
+function showInstallButtons(show){
+  const b1 = document.getElementById('installAppBtn');
+  const b2 = document.getElementById('installAppBtnLogin');
+  if(b1) b1.style.display = show ? 'inline-block' : 'none';
+  if(b2) b2.style.display = show ? 'inline-block' : 'none';
+}
+window.addEventListener('beforeinstallprompt', (e)=>{
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  if(!isStandalone()) showInstallButtons(true);
+});
+window.addEventListener('appinstalled', ()=>{
+  deferredInstallPrompt = null;
+  showInstallButtons(false);
+});
+async function installApp(){
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    showInstallButtons(false);
+    return;
+  }
+  // Pas d'évènement natif disponible (iOS Safari, ou déjà installé, ou
+  // conditions du navigateur pas encore réunies) : on guide la personne.
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(isIOS){
+    alert('Pour installer l\'application sur iPhone/iPad :\n\n1. Ouvrez ce lien dans Safari (pas Chrome).\n2. Appuyez sur le bouton Partager (le carré avec une flèche vers le haut).\n3. Choisissez "Sur l\'écran d\'accueil".');
+  } else {
+    alert('Le bouton d\'installation apparaît automatiquement une fois que le navigateur le permet (parfois après quelques visites). En attendant, ouvrez le menu ⋮ du navigateur et choisissez "Installer l\'application" ou "Ajouter à l\'écran d\'accueil".');
+  }
+}
+if(isStandalone()) showInstallButtons(false);
+
+/* ============================================================
+   PARTAGE DE L'APPLICATION (lien, WhatsApp, e-mail, copier)
+   ============================================================ */
+function appShareUrl(){
+  return window.location.origin + window.location.pathname.replace(/index\.html$/, '').replace(/\/?$/, '/') + 'installer.html';
+}
+function openShareModal(){
+  const url = appShareUrl();
+  document.getElementById('shareUrlInput').value = url;
+  document.getElementById('shareWhatsapp').href = 'https://wa.me/?text=' + encodeURIComponent('Hôtellerie — accédez à l\'application ici : ' + url);
+  document.getElementById('shareEmail').href = 'mailto:?subject=' + encodeURIComponent('Hôtellerie') + '&body=' + encodeURIComponent('Bonjour,\n\nVoici le lien vers Hôtellerie :\n' + url + '\n\nVous pouvez l\'ouvrir dans votre navigateur, puis l\'installer sur votre téléphone via "Ajouter à l\'écran d\'accueil" / "Installer l\'application".');
+  document.getElementById('shareNativeBtn').style.display = navigator.share ? 'inline-block' : 'none';
+  document.getElementById('shareFileWarning').style.display = (window.location.protocol === 'file:') ? 'block' : 'none';
+  openModal('modalShare');
+}
+function copyShareLink(){
+  const url = appShareUrl();
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(()=>alert('Lien copié.')).catch(()=>fallbackCopyShare());
+  } else {
+    fallbackCopyShare();
+  }
+}
+function fallbackCopyShare(){
+  const inp = document.getElementById('shareUrlInput');
+  inp.focus(); inp.select();
+  try{ document.execCommand('copy'); alert('Lien copié.'); }
+  catch(e){ alert('Copiez le lien manuellement : ' + inp.value); }
+}
+function nativeShare(){
+  if(!navigator.share) return;
+  navigator.share({title:'Hôtellerie', text:'Accédez à Hôtellerie :', url: appShareUrl()}).catch(()=>{});
+}
+
+// Mise à jour en direct de l'indicateur de synchronisation toutes les secondes
+setInterval(updateSyncStatus, 1000);
 </script>
 </body>
 </html>

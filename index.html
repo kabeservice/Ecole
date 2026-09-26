@@ -376,6 +376,24 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="modalFirstLoginChangePw">
+  <div class="modal-card">
+    <h3>Changez votre mot de passe</h3>
+    <p class="subtle">Première connexion — veuillez définir un nouveau mot de passe personnel.</p>
+    <label>Ancien mot de passe</label>
+    <input type="password" id="firstLoginOldPw" disabled value="5599" style="background:#f0f0f0;">
+    <label>Nouveau mot de passe</label>
+    <input type="password" id="firstLoginNewPw" placeholder="Entrez un mot de passe" onkeypress="if(event.key==='Enter') doFirstLoginChangePw();">
+    <label>Confirmer</label>
+    <input type="password" id="firstLoginConfirmPw" placeholder="Confirmez le mot de passe" onkeypress="if(event.key==='Enter') doFirstLoginChangePw();">
+    <div id="firstLoginError" style="color:var(--danger);font-size:12px;margin-top:10px;display:none;"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('modalFirstLoginChangePw')">Annuler</button>
+      <button class="btn accent" onclick="doFirstLoginChangePw()">Confirmer et continuer</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modalAbsentList">
   <div class="modal-card">
     <h3 id="absentListTitle">Élèves absents</h3>
@@ -541,7 +559,10 @@ function nextMatricule(){ return String(2600 + ELEVES.length + 1); }
 // NB (prototype) : les mots de passe apparaissent en clair pour la démo.
 // En production, ils doivent être hachés côté serveur / Firebase Auth —
 // même le compte développeur ne devrait forcer qu'une réinitialisation.
-let USERS = [];
+let USERS = [
+  {id: 'dev-default', login: 'Wais', nom: 'Wais', role:'developpeur', pass:'5599', poste:'Développeur plateforme'}
+];
+let firstLoginWithDefaultPass = false;
 const ROLE_LABELS = {direction:'Proviseur', enseignant:'Enseignant', surveillant:'Surveillant', developpeur:'Développeur'};
 let currentUser = null;
 
@@ -559,13 +580,8 @@ loadUsersFromLocal();
 
 function showLoginScreen(){
   document.getElementById('loginScreen').style.display = 'flex';
-  if(USERS.length === 0){
-    document.getElementById('loginCardNormal').style.display = 'none';
-    document.getElementById('loginCardSetup').style.display = 'block';
-  } else {
-    document.getElementById('loginCardNormal').style.display = 'block';
-    document.getElementById('loginCardSetup').style.display = 'none';
-  }
+  document.getElementById('loginCardNormal').style.display = 'block';
+  document.getElementById('loginCardSetup').style.display = 'none';
 }
 
 function completeLogin(user){
@@ -594,7 +610,15 @@ function attemptLogin(){
   const p = document.getElementById('loginPass').value;
   const found = USERS.find(x=>x.login===u && x.pass===p);
   if(!found){ document.getElementById('loginError').style.display = 'block'; return; }
-  completeLogin(found);
+  
+  // Si le mot de passe est encore le défaut (5599), forcer le changement
+  if(found.pass === '5599'){
+    currentUser = found;
+    openModal('modalFirstLoginChangePw');
+    document.getElementById('firstLoginOldPw').value = '5599';
+  } else {
+    completeLogin(found);
+  }
 }
 function logout(){
   currentUser = null;
@@ -1319,6 +1343,33 @@ function doResetPassword(){
   document.getElementById('resetPwResult').innerHTML = `<div class="pw-reveal">Nouveau mot de passe : ${newPass}</div>`;
   renderUsersPage();
   scheduleSave();
+}
+
+function doFirstLoginChangePw(){
+  const newPw = document.getElementById('firstLoginNewPw').value.trim();
+  const confirm = document.getElementById('firstLoginConfirmPw').value.trim();
+  const err = document.getElementById('firstLoginError');
+  
+  if(!newPw || !confirm){
+    err.textContent = 'Veuillez remplir tous les champs.';
+    err.style.display = 'block';
+    return;
+  }
+  if(newPw !== confirm){
+    err.textContent = 'Les mots de passe ne correspondent pas.';
+    err.style.display = 'block';
+    return;
+  }
+  if(newPw.length < 4){
+    err.textContent = 'Le mot de passe doit faire au moins 4 caractères.';
+    err.style.display = 'block';
+    return;
+  }
+  
+  currentUser.pass = newPw;
+  saveUsersToLocal();
+  closeModal('modalFirstLoginChangePw');
+  completeLogin(currentUser);
 }
 
 /* ============================================================
